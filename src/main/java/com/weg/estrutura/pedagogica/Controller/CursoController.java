@@ -3,6 +3,9 @@ package com.weg.estrutura.pedagogica.Controller;
 import com.weg.estrutura.pedagogica.Dto.Reposta.CursoRespostaDto;
 import com.weg.estrutura.pedagogica.Dto.Requisicao.CursoRequisicaoDto;
 import com.weg.estrutura.pedagogica.Service.CursoService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,33 +20,29 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
-    // cadastrar curso
     @PostMapping
-    public CursoRespostaDto cadastrar(@RequestBody CursoRequisicaoDto dto) {
-        return cursoService.cadastrarCurso(dto);
+    public ResponseEntity<CursoRespostaDto> cadastrar(@RequestBody CursoRequisicaoDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(cursoService.cadastrarCurso(dto));
     }
 
-    // listar cursos
     @GetMapping
-    public List<CursoRespostaDto> listar() {
-        return cursoService.listarCursos();
+    public ResponseEntity<List<CursoRespostaDto>> listar() {
+        return ResponseEntity.ok(cursoService.listarCursos());
     }
 
-    // buscar por nome do professor
     @GetMapping("/professor-nome")
-    public List<CursoRespostaDto> buscarPorNome(@RequestParam String nome) {
-        return cursoService.buscarPorNomeProfessor(nome);
+    public ResponseEntity<List<CursoRespostaDto>> buscarPorNome(@RequestParam String nome) {
+        return ResponseEntity.ok(cursoService.buscarPorNomeProfessor(nome));
     }
 
-    // buscar por id do professor
     @GetMapping("/professor/{id}")
-    public List<CursoRespostaDto> buscarPorId(@PathVariable Long id) {
-        return cursoService.buscarPorIdProfessor(id);
+    public ResponseEntity<List<CursoRespostaDto>> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(cursoService.buscarPorIdProfessor(id));
     }
 
-    // buscar por título do curso
     @GetMapping("/titulo")
-    public List<CursoRespostaDto> buscarPorTitulo(@RequestParam String titulo) {
-        return cursoService.buscarPorTitulo(titulo);
+    public ResponseEntity<List<CursoRespostaDto>> buscarPorTitulo(@RequestParam String titulo) {
+        return ResponseEntity.ok(cursoService.buscarPorTitulo(titulo));
     }
 }

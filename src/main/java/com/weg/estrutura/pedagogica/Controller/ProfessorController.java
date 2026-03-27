@@ -3,6 +3,9 @@ package com.weg.estrutura.pedagogica.Controller;
 import com.weg.estrutura.pedagogica.Dto.Reposta.ProfessorRespostaDto;
 import com.weg.estrutura.pedagogica.Dto.Requisicao.ProfessorRequisicaoDto;
 import com.weg.estrutura.pedagogica.Service.ProfessorService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,15 +20,14 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
-    // cadastrar professor
     @PostMapping
-    public ProfessorRespostaDto cadastrar(@RequestBody ProfessorRequisicaoDto dto) {
-        return professorService.cadastrarProfessor(dto);
+    public ResponseEntity<ProfessorRespostaDto> cadastrar(@RequestBody ProfessorRequisicaoDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(professorService.cadastrarProfessor(dto));
     }
 
-    // listar professores
     @GetMapping
-    public List<ProfessorRespostaDto> listar() {
-        return professorService.listarProfessores();
+    public ResponseEntity<List<ProfessorRespostaDto>> listar() {
+        return ResponseEntity.ok(professorService.listarProfessores());
     }
 }
